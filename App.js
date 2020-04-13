@@ -1,67 +1,67 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button, FlatList } from "react-native";
 
-import GoalItem from './components/Goaltem';
-import GoalInput from './components/GoalInput';
-import { init, insertGoal, fetchGoals, deleteGoals } from './helpers/db';
+import GoalItem from "./components/Goaltem";
+import GoalInput from "./components/GoalInput";
+import {
+  init,
+  insertGoal,
+  fetchGoals,
+  deleteGoals,
+  deleteGoal,
+} from "./helpers/db";
 
 init()
   .then(() => {
-    console.log('Initailized database')
+    console.log("Initailized database");
   })
   .catch((err) => {
-    console.log('Initializing database failed')
-    console.log(err)
-  })
+    console.log("Initializing database failed");
+    console.log(err);
+  });
 
 export default function App() {
   const [goals, setGoals] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    getDb()
-  }, [])
+    getDb();
+  }, []);
 
   const addDb = async (goal) => {
-    const dbRes = await insertGoal(goal)
+    const dbRes = await insertGoal(goal);
     // console.log(dbRes)
-  }
+  };
 
   const getDb = async () => {
-    const res = await fetchGoals()
-    console.log('result:', res.rows._array)
-    setGoals(res.rows._array)
-  }
+    const res = await fetchGoals();
+    console.log("result:", res.rows._array);
+    setGoals(res.rows._array);
+  };
 
-  const deleteDb = async () => {
-    const res = await deleteGoals()
-    console.log(res)
-  }
+  const deleteHandler = (itemId) => {
+    deleteGoal(itemId);
+    getDb();
+  };
 
   const addGoalHandler = (goal) => {
     // setGoals([...goals, enteredGoal])
-    setGoals(currentGoals => [
-      ...currentGoals, {id: Math.random().toString(), text: goal}
+    setGoals((currentGoals) => [
+      ...currentGoals,
+      { id: Math.random().toString(), text: goal },
     ]);
     setIsAdding(false);
-    addDb(goal)
-    getDb()
-  }
-
-
-  const onDelete = (goalId) => {
-    setGoals(currentGoals => {
-      return currentGoals.filter(goal => goal.id !== goalId)
-    })
-  }
+    addDb(goal);
+    getDb();
+  };
 
   const cancelAdd = () => {
-    setIsAdding(false)
-  }
+    setIsAdding(false);
+  };
 
   return (
     <View style={styles.screen}>
-      <Button title="Add a Goal" onPress={() => setIsAdding(true)}/>
+      <Button title="Add a Goal" onPress={() => setIsAdding(true)} />
       <GoalInput
         addGoalHandler={addGoalHandler}
         visible={isAdding}
@@ -70,21 +70,21 @@ export default function App() {
       <FlatList
         keyExtractor={(item, index) => item.id.toString()}
         data={goals}
-        renderItem={itemData => (
-          <GoalItem 
-            onDelete={onDelete} 
+        renderItem={(itemData) => (
+          <GoalItem
             title={itemData.item.goal}
             id={itemData.item.id}
+            deleteHandler={deleteHandler}
           />
         )}
       />
-      <Button title="DELETE DB" onPress={deleteGoals}/>
+      <Button title="DELETE ALL" onPress={deleteGoals} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50
-  }
+    padding: 50,
+  },
 });
