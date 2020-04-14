@@ -3,12 +3,10 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 const GoalItem = (props) => {
   return (
-    <TouchableOpacity
-      onPress={() => props.deleteHandler(props.id)}
-      activeOpacity={0.7}
-    >
+    <TouchableOpacity activeOpacity={0.7}>
       <View style={styles.listItem}>
-        <Text>{props.title}</Text>
+        <Text style={styles.title}>{props.title}</Text>
+        <Text onPress={() => props.deleteHandler(props.id)}>❌</Text>
       </View>
     </TouchableOpacity>
   );
@@ -16,11 +14,16 @@ const GoalItem = (props) => {
 
 const styles = StyleSheet.create({
   listItem: {
-    padding: 10,
+    padding: 5,
     marginVertical: 10,
-    backgroundColor: "#BADA22",
-    borderColor: "black",
-    borderWidth: 1,
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 22,
   },
 });
 
