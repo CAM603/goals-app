@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
-import GoalItem from "../components/Goaltem";
 import GoalInput from "../components/GoalInput";
 import { insertGoal, fetchGoals, deleteGoals, deleteGoal } from "../helpers/db";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
+import GoalList from "../components/GoalList";
+import NoGoals from "../components/NoGoals";
 
 const HomeScreen = (props) => {
   const [goals, setGoals] = useState([]);
@@ -50,18 +51,12 @@ const HomeScreen = (props) => {
         visible={isAdding}
         cancelAdd={cancelAdd}
       />
-      <FlatList
-        keyExtractor={(item, index) => item.id.toString()}
-        data={goals}
-        renderItem={(itemData) => (
-          <GoalItem
-            title={itemData.item.goal}
-            id={itemData.item.id}
-            deleteHandler={deleteHandler}
-          />
-        )}
-      />
-      <Button title="DELETE ALL" onPress={deleteGoals} />
+      {goals.length === 0 ? (
+        <NoGoals />
+      ) : (
+        <GoalList goals={goals} deleteHandler={deleteHandler} />
+      )}
+      {/* <Button title="DELETE ALL" onPress={deleteGoals} /> */}
     </View>
   );
 };
@@ -80,6 +75,13 @@ HomeScreen.navigationOptions = (navData) => {
     ),
   };
 };
-const styles = StyleSheet.create({});
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+});
 
 export default HomeScreen;
