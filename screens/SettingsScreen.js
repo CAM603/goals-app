@@ -20,7 +20,7 @@ const FilterSwitch = (props) => {
 const SettingsScreen = (props) => {
   const [darkMode, setDarkMode] = useState(false);
 
-  const saveSettings = useCallback(async () => {
+  const saveSettings = useCallback(() => {
     const appliedSettings = {
       hasDarkMode: darkMode,
     };
@@ -28,6 +28,7 @@ const SettingsScreen = (props) => {
   }, [darkMode]);
 
   useEffect(() => {
+    getDb();
     props.navigation.setParams({ save: saveSettings });
   }, [saveSettings]);
 

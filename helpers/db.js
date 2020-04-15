@@ -1,6 +1,7 @@
 import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabase("goals.db");
+const db2 = SQLite.openDatabase("settings.db");
 
 export const init = () => {
   const promise = new Promise((resolve, reject) => {
@@ -17,8 +18,16 @@ export const init = () => {
           reject();
         }
       );
+    });
+  });
+  return promise;
+};
+
+export const init2 = () => {
+  const promise = new Promise((resolve, reject) => {
+    db2.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY NOT NULL, setting TEXT NOT NULL, active INT);",
+        "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY NOT NULL, setting TEXT UNIQUE, active INT);",
         [],
         // Success
         () => {
@@ -57,9 +66,9 @@ export const insertGoal = (goal) => {
 
 export const insertSetting = (setting) => {
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db2.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO settings (setting) VALUES (?)",
+        "INSERT INTO settings (setting, active) VALUES (?, 0)",
         [setting],
         // Success
         (_, result) => {
@@ -98,7 +107,7 @@ export const fetchGoals = () => {
 
 export const fetchSettings = () => {
   const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
+    db2.transaction((tx) => {
       tx.executeSql(
         "SELECT * FROM settings",
         [],
@@ -137,6 +146,29 @@ export const deleteGoals = () => {
 
   return promise;
 };
+
+export const deleteSettings = () => {
+  const promise = new Promise((resolve, reject) => {
+    db2.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM settings",
+        [],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
+          console.log(err);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
 export const deleteGoal = (goalId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {

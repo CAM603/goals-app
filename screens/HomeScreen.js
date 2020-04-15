@@ -7,6 +7,7 @@ import {
   fetchGoals,
   fetchSettings,
   deleteGoals,
+  deleteSettings,
   deleteGoal,
 } from "../helpers/db";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,8 +17,11 @@ import NoGoals from "../components/NoGoals";
 
 const HomeScreen = (props) => {
   const [goals, setGoals] = useState([]);
+  const [settings, setSettings] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+
+  let darkMode = settings.find((el) => el.setting === "Dark Mode");
+  darkMode.active === 0 ? console.log("zero") : console.log("one");
 
   useEffect(() => {
     getDb();
@@ -32,7 +36,8 @@ const HomeScreen = (props) => {
     console.log("result:", res.rows._array);
     setGoals(res.rows._array);
     const res2 = await fetchSettings();
-    console.log(res2.rows._array);
+    console.log("result:", res2.rows._array);
+    setSettings(res2.rows._array);
   };
 
   const deleteHandler = (itemId) => {
@@ -43,7 +48,6 @@ const HomeScreen = (props) => {
   const addGoalHandler = (goal) => {
     setIsAdding(false);
     insertGoal(goal);
-    insertSetting(goal);
     getDb();
   };
 
@@ -67,7 +71,7 @@ const HomeScreen = (props) => {
       ) : (
         <GoalList goals={goals} deleteHandler={deleteHandler} />
       )}
-      {/* <Button title="DELETE ALL" onPress={deleteGoals} /> */}
+      <Button title="DELETE ALL" onPress={deleteSettings} />
     </View>
   );
 };
