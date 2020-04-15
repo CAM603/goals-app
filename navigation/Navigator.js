@@ -1,6 +1,8 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import HomeScreen from "../screens/HomeScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -27,4 +29,23 @@ const GoalsNavigator = createStackNavigator(
   }
 );
 
-export default createAppContainer(GoalsNavigator);
+const SettingsNavigator = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+  },
+  {
+    // Used with shifting on android
+    tabBarColor: "black",
+  }
+);
+
+const MainNavigator = createDrawerNavigator({
+  Goals: {
+    screen: GoalsNavigator,
+  },
+  Settings: {
+    screen: SettingsNavigator,
+  },
+});
+
+export default createAppContainer(MainNavigator);

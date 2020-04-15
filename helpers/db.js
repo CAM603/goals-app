@@ -17,6 +17,19 @@ export const init = () => {
           reject();
         }
       );
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY NOT NULL, setting TEXT NOT NULL, active INT);",
+        [],
+        // Success
+        () => {
+          resolve();
+        },
+        // Failure
+        (_, err) => {
+          reject();
+          console.log(err);
+        }
+      );
     });
   });
   return promise;
@@ -42,11 +55,52 @@ export const insertGoal = (goal) => {
   return promise;
 };
 
+export const insertSetting = (setting) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO settings (setting) VALUES (?)",
+        [setting],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
+          console.log(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 export const fetchGoals = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
         "SELECT * FROM goals",
+        [],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
+        }
+      );
+    });
+  });
+  return promise;
+};
+
+export const fetchSettings = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM settings",
         [],
         // Success
         (_, result) => {

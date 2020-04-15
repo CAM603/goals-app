@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { init } from "./helpers/db";
 import GoalsNavigator from "./navigation/Navigator";
 

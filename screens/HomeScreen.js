@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 import GoalInput from "../components/GoalInput";
-import { insertGoal, fetchGoals, deleteGoals, deleteGoal } from "../helpers/db";
+import {
+  insertGoal,
+  insertSetting,
+  fetchGoals,
+  fetchSettings,
+  deleteGoals,
+  deleteGoal,
+} from "../helpers/db";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -10,6 +17,7 @@ import NoGoals from "../components/NoGoals";
 const HomeScreen = (props) => {
   const [goals, setGoals] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     getDb();
@@ -23,6 +31,8 @@ const HomeScreen = (props) => {
     const res = await fetchGoals();
     console.log("result:", res.rows._array);
     setGoals(res.rows._array);
+    const res2 = await fetchSettings();
+    console.log(res2.rows._array);
   };
 
   const deleteHandler = (itemId) => {
@@ -33,6 +43,7 @@ const HomeScreen = (props) => {
   const addGoalHandler = (goal) => {
     setIsAdding(false);
     insertGoal(goal);
+    insertSetting(goal);
     getDb();
   };
 
@@ -70,6 +81,17 @@ HomeScreen.navigationOptions = (navData) => {
           title="add"
           iconName="md-add-circle"
           onPress={navData.navigation.getParam("toggleAdding")}
+        />
+      </HeaderButtons>
+    ),
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
         />
       </HeaderButtons>
     ),
