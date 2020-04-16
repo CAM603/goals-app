@@ -28,7 +28,6 @@ const SettingsScreen = (props) => {
   }, [darkMode]);
 
   useEffect(() => {
-    getDb();
     props.navigation.setParams({ save: saveSettings });
   }, [saveSettings]);
 

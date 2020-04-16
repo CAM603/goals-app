@@ -1,54 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
-import GoalInput from "../components/GoalInput";
-import {
-  insertGoal,
-  insertSetting,
-  fetchGoals,
-  fetchSettings,
-  deleteGoals,
-  deleteSettings,
-  deleteGoal,
-} from "../helpers/db";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getGoals, addGoal, removeGoal } from "../actions/goals";
+import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
 import NoGoals from "../components/NoGoals";
 
 const HomeScreen = (props) => {
-  const [goals, setGoals] = useState([]);
-  const [settings, setSettings] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
-  let darkMode = settings.find((el) => el.setting === "Dark Mode");
-  darkMode.active === 0 ? console.log("zero") : console.log("one");
+  // let darkMode = settings.find((el) => el.setting === "Dark Mode");
+  // darkMode.active === 0 ? console.log("zero") : console.log("one");
+  let dispatch = useDispatch();
 
   useEffect(() => {
-    getDb();
-  }, []);
+    dispatch(getGoals());
+  }, [goals]);
+
+  const goals = useSelector((state) => state.goals.goals);
 
   useEffect(() => {
     props.navigation.setParams({ toggleAdding: toggleAdd });
-  }, []);
+  }, [goals]);
 
-  const getDb = async () => {
-    const res = await fetchGoals();
-    console.log("result:", res.rows._array);
-    setGoals(res.rows._array);
-    const res2 = await fetchSettings();
-    console.log("result:", res2.rows._array);
-    setSettings(res2.rows._array);
-  };
-
-  const deleteHandler = (itemId) => {
-    deleteGoal(itemId);
-    getDb();
+  const deleteHandler = (goalID) => {
+    dispatch(removeGoal(goalID));
   };
 
   const addGoalHandler = (goal) => {
     setIsAdding(false);
-    insertGoal(goal);
-    getDb();
+    dispatch(addGoal(goal));
   };
 
   const cancelAdd = () => {
@@ -71,7 +55,6 @@ const HomeScreen = (props) => {
       ) : (
         <GoalList goals={goals} deleteHandler={deleteHandler} />
       )}
-      <Button title="DELETE ALL" onPress={deleteSettings} />
     </View>
   );
 };
