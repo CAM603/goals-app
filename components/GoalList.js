@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import GoalItem from "../components/Goaltem";
+import Loading from "../components/Loading";
 
 const GoalList = (props) => {
   const loading = useSelector((state) => state.goals.loading);
@@ -11,7 +12,7 @@ const GoalList = (props) => {
   return (
     <View style={styles.listContainer}>
       {loading ? (
-        <Text>Loading...</Text>
+        <Loading />
       ) : (
         <FlatList
           keyExtractor={(item, index) => item.id.toString()}
