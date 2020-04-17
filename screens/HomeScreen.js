@@ -3,7 +3,7 @@ import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getGoals, addGoal, removeGoal } from "../actions/goals";
+import { getGoals } from "../actions/goals";
 import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -11,33 +11,20 @@ import NoGoals from "../components/NoGoals";
 
 const HomeScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
-
   // let darkMode = settings.find((el) => el.setting === "Dark Mode");
   // darkMode.active === 0 ? console.log("zero") : console.log("one");
   let dispatch = useDispatch();
 
+  const goals = useSelector((state) => state.goals.goals);
+  const loading = useSelector((state) => state.goals.loading);
+
   useEffect(() => {
     dispatch(getGoals());
-  }, [goals]);
-
-  const goals = useSelector((state) => state.goals.goals);
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ toggleAdding: toggleAdd });
-  }, [goals]);
-
-  const deleteHandler = (goalID) => {
-    dispatch(removeGoal(goalID));
-  };
-
-  const addGoalHandler = (goal) => {
-    setIsAdding(false);
-    dispatch(addGoal(goal));
-  };
-
-  const cancelAdd = () => {
-    setIsAdding(false);
-  };
+  }, []);
 
   const toggleAdd = () => {
     setIsAdding(!isAdding);
@@ -45,16 +32,8 @@ const HomeScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <GoalInput
-        addGoalHandler={addGoalHandler}
-        visible={isAdding}
-        cancelAdd={cancelAdd}
-      />
-      {goals.length === 0 ? (
-        <NoGoals />
-      ) : (
-        <GoalList goals={goals} deleteHandler={deleteHandler} />
-      )}
+      <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
+      {goals.length === 0 && !loading ? <NoGoals /> : <GoalList />}
     </View>
   );
 };

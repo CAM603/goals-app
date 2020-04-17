@@ -1,11 +1,16 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { removeGoal } from "../actions/goals";
 
 const GoalItem = (props) => {
+  const dispatch = useDispatch();
+
   return (
     <TouchableOpacity style={styles.listItem} activeOpacity={0.7}>
       <Text style={styles.title}>{props.title}</Text>
-      <Text onPress={() => props.deleteHandler(props.id)}>❌</Text>
+      <Text onPress={() => dispatch(removeGoal(props.id))}>❌</Text>
     </TouchableOpacity>
   );
 };

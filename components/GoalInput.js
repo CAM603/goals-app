@@ -1,65 +1,73 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Button, Modal} from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { addGoal } from "../actions/goals";
 
 const GoalInput = (props) => {
-  const [enteredGoal, setEnteredGoal] = useState('');
+  const [enteredGoal, setEnteredGoal] = useState("");
+  const dispatch = useDispatch();
 
   const goalInputHandler = (text) => {
-    setEnteredGoal(text)
-  }
-  const addGoal = () => {
-    if(!enteredGoal) {
-      return
+    setEnteredGoal(text);
+  };
+
+  const addGoalHandler = () => {
+    if (!enteredGoal) {
+      return;
     }
-    props.addGoalHandler(enteredGoal)
-    setEnteredGoal('')
-  }
+    props.setIsAdding(false);
+    dispatch(addGoal(enteredGoal));
+    setEnteredGoal("");
+  };
+
   return (
-    <Modal visible={props.visible} animationType="slide">
+    <Modal visible={props.isAdding} animationType="slide">
       <View style={styles.inputContainer}>
-        <TextInput 
-              placeholder="Goal" 
-              style={styles.input}
-              onChangeText={goalInputHandler}
-              value={enteredGoal}
+        <TextInput
+          placeholder="Goal"
+          style={styles.input}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="CANCEL" color="red" onPress={props.cancelAdd}/>
+            <Button
+              title="CANCEL"
+              color="red"
+              onPress={() => props.setIsAdding(false)}
+            />
           </View>
           <View style={styles.button}>
-            <Button 
-              title="ADD"
-              onPress={addGoal}
-            />
+            <Button title="ADD" onPress={addGoalHandler} />
           </View>
         </View>
       </View>
     </Modal>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   input: {
-    borderBottomColor: 'black', 
-    borderBottomWidth: 1, 
-    padding: 10, 
-    width: '80%',
-    marginBottom: 10
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    padding: 10,
+    width: "80%",
+    marginBottom: 10,
   },
   inputContainer: {
     flex: 1,
-    justifyContent: 'center', 
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonContainer: {
-    flexDirection: 'row',
-    width: '50%',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    width: "50%",
+    justifyContent: "space-between",
   },
   button: {
-    width: 100
-  }
-})
+    width: 100,
+  },
+});
 
 export default GoalInput;
