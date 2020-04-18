@@ -1,9 +1,15 @@
-import { GET_GOALS, ADD_GOAL, REMOVE_GOAL } from "../actions/goals";
+import {
+  GET_GOALS,
+  ADD_GOAL,
+  REMOVE_GOAL,
+  TOGGLE_DARK_MODE,
+} from "../actions/goals";
 
 const initialState = {
   goals: [],
   settings: [],
   loading: false,
+  darkMode: false,
 };
 
 const goalsReducer = (state = initialState, action) => {
@@ -14,6 +20,8 @@ const goalsReducer = (state = initialState, action) => {
       return { ...state, loading: true };
     case REMOVE_GOAL:
       return { ...state, loading: true };
+    case TOGGLE_DARK_MODE:
+      return { ...state, darkMode: !state.darkMode };
     default:
       return state;
   }

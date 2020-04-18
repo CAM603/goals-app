@@ -1,6 +1,7 @@
 export const GET_GOALS = "GET_GOALS";
 export const ADD_GOAL = "ADD_GOAL";
 export const REMOVE_GOAL = "REMOVE_GOAL";
+export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
 
 import { fetchGoals, insertGoal, deleteGoal } from "../helpers/db";
 
@@ -21,4 +22,8 @@ export const removeGoal = (goalID) => async (dispatch) => {
   dispatch({ type: REMOVE_GOAL });
   await deleteGoal(goalID);
   dispatch(getGoals());
+};
+
+export const toggleDarkMode = () => (dispatch) => {
+  dispatch({ type: TOGGLE_DARK_MODE });
 };

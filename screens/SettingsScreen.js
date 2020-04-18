@@ -1,24 +1,37 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, StyleSheet, Switch, Platform } from "react-native";
+import React, { useEffect, useCallback } from "react";
+import { View, Text, StyleSheet, Switch } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+
 import HeaderButton from "../components/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { toggleDarkMode } from "../actions/goals";
+import Colors from "../constants/Colors";
 
 const FilterSwitch = (props) => {
   return (
     <View style={styles.filterContainer}>
-      <Text>{props.label}</Text>
+      <Text
+        style={{
+          color: props.isDarkMode ? Colors.dark.text : Colors.light.text,
+        }}
+      >
+        {props.label}
+      </Text>
       <Switch
         value={props.state}
         onValueChange={props.onChange}
-        trackColor={{ true: "black" }}
-        thumbColor={Platform.OS === "android" ? "black" : "white"}
+        trackColor={{ true: Colors.dark.text, false: Colors.dark.bg }}
+        thumbColor={props.isDarkMode ? Colors.dark.text : Colors.light.text}
       />
     </View>
   );
 };
 
 const SettingsScreen = (props) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const dispatch = useDispatch();
+
+  const darkMode = useSelector((state) => state.goals.darkMode);
+  const isDarkMode = props.navigation.getParam("isDarkMode");
 
   const saveSettings = useCallback(() => {
     const appliedSettings = {
@@ -27,25 +40,47 @@ const SettingsScreen = (props) => {
     console.log(appliedSettings);
   }, [darkMode]);
 
+  const toggle = () => {
+    dispatch(toggleDarkMode());
+  };
+
   useEffect(() => {
     props.navigation.setParams({ save: saveSettings });
   }, [saveSettings]);
 
+  useEffect(() => {
+    props.navigation.setParams({ isDarkMode: darkMode });
+  }, [darkMode]);
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Settings</Text>
+    <View
+      style={[
+        styles.screen,
+        { backgroundColor: isDarkMode ? Colors.dark.bg : Colors.light.bg },
+      ]}
+    >
       <FilterSwitch
         label="Dark Mode"
+        isDarkMode={isDarkMode}
         state={darkMode}
-        onChange={(newValue) => setDarkMode(newValue)}
+        onChange={() => toggle()}
       />
     </View>
   );
 };
 
 SettingsScreen.navigationOptions = (navData) => {
+  const isDarkMode = navData.navigation.getParam("isDarkMode");
+
   return {
     headerTitle: "Settings",
+    headerStyle: {
+      backgroundColor: isDarkMode ? Colors.dark.bg : Colors.light.bg,
+    },
+    headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
+    headerTitleStyle: {
+      // fontWeight: "bold",
+    },
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
@@ -73,11 +108,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
-  },
-  title: {
-    fontSize: 22,
-    margin: 20,
-    textAlign: "center",
   },
   filterContainer: {
     flexDirection: "row",

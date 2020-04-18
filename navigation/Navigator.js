@@ -5,16 +5,16 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const defaultStackNavOptions = {
-  headerStyle: {
-    backgroundColor: Platform.OS === "android" ? "black" : "white",
-  },
-  headerTitleStyle: {
-    color: "black",
-  },
-  headerBackTitleStyle: {
-    color: "black",
-  },
-  headerTintColor: Platform.OS === "android" ? "white" : "white",
+  // headerStyle: {
+  //   backgroundColor: Platform.OS === "android" ? "black" : "white",
+  // },
+  // headerTitleStyle: {
+  //   color: "black",
+  // },
+  // headerBackTitleStyle: {
+  //   color: "black",
+  // },
+  // headerTintColor: Platform.OS === "android" ? "black" : "white",
   headerTitle: "A Screen",
 };
 
@@ -31,11 +31,12 @@ const GoalsNavigator = createStackNavigator(
 
 const SettingsNavigator = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Settings: { screen: SettingsScreen },
   },
   {
     // Used with shifting on android
-    tabBarColor: "black",
+    // tabBarColor: "black",
+    defaultNavigationOptions: defaultStackNavOptions,
   }
 );
 

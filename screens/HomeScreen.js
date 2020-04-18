@@ -8,6 +8,7 @@ import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
 import NoGoals from "../components/NoGoals";
+import Colors from "../constants/Colors";
 
 const HomeScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -17,6 +18,7 @@ const HomeScreen = (props) => {
 
   const goals = useSelector((state) => state.goals.goals);
   const loading = useSelector((state) => state.goals.loading);
+  const darkMode = useSelector((state) => state.goals.darkMode);
 
   useEffect(() => {
     dispatch(getGoals());
@@ -24,14 +26,23 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ toggleAdding: toggleAdd });
-  }, []);
+  }, [toggleAdd]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isDarkMode: darkMode });
+  }, [darkMode]);
 
   const toggleAdd = () => {
     setIsAdding(!isAdding);
   };
 
   return (
-    <View style={styles.screen}>
+    <View
+      style={[
+        styles.screen,
+        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
+      ]}
+    >
       <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
       {goals.length === 0 && !loading ? <NoGoals /> : <GoalList />}
     </View>
@@ -39,8 +50,17 @@ const HomeScreen = (props) => {
 };
 
 HomeScreen.navigationOptions = (navData) => {
+  const isDarkMode = navData.navigation.getParam("isDarkMode");
+
   return {
     headerTitle: "My Goals",
+    headerStyle: {
+      backgroundColor: isDarkMode ? Colors.dark.bg : Colors.light.bg,
+    },
+    headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
+    headerTitleStyle: {
+      // fontWeight: "bold",
+    },
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
@@ -68,7 +88,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
   },
 });
 
