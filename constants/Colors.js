@@ -7,4 +7,5 @@ export default {
     bg: "white",
     text: "black",
   },
+  accent: "#262A2C",
 };

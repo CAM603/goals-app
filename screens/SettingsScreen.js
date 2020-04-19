@@ -11,17 +11,20 @@ const FilterSwitch = (props) => {
   return (
     <View style={styles.filterContainer}>
       <Text
-        style={{
-          color: props.isDarkMode ? Colors.dark.text : Colors.light.text,
-        }}
+        style={[
+          styles.text,
+          {
+            color: props.isDarkMode ? Colors.dark.text : Colors.light.text,
+          },
+        ]}
       >
         {props.label}
       </Text>
       <Switch
         value={props.state}
         onValueChange={props.onChange}
-        trackColor={{ true: Colors.dark.text, false: Colors.dark.bg }}
-        thumbColor={props.isDarkMode ? Colors.dark.text : Colors.light.text}
+        // trackColor={{ true: "yellow", false: "green" }}
+        thumbColor={Colors.accent}
       />
     </View>
   );
@@ -115,6 +118,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "80%",
     marginVertical: 15,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

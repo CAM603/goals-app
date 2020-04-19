@@ -1,10 +1,28 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import Colors from "../constants/Colors";
 
 const NoGoals = () => {
+  const darkMode = useSelector((state) => state.goals.darkMode);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>0 Goals</Text>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
+      ]}
+    >
+      <Text
+        style={[
+          styles.title,
+          {
+            color: darkMode ? Colors.dark.text : Colors.light.text,
+          },
+        ]}
+      >
+        0 Goals
+      </Text>
     </View>
   );
 };

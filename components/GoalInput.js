@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addGoal } from "../actions/goals";
+import Colors from "../constants/Colors";
 
 const GoalInput = (props) => {
   const [enteredGoal, setEnteredGoal] = useState("");
+  const darkMode = useSelector((state) => state.goals.darkMode);
   const dispatch = useDispatch();
 
   const goalInputHandler = (text) => {
@@ -21,22 +23,37 @@ const GoalInput = (props) => {
     setEnteredGoal("");
   };
 
+  const cancelHandler = () => {
+    props.setIsAdding(false);
+    setEnteredGoal("");
+  };
+
   return (
     <Modal visible={props.isAdding} animationType="slide">
-      <View style={styles.inputContainer}>
+      <View
+        style={[
+          styles.inputContainer,
+          { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
+        ]}
+      >
         <TextInput
           placeholder="Goal"
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              borderBottomColor: darkMode
+                ? Colors.dark.text
+                : Colors.light.text,
+              color: darkMode ? Colors.dark.text : Colors.light.text,
+            },
+          ]}
           onChangeText={goalInputHandler}
           value={enteredGoal}
+          underlineColorAndroid="transparent"
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button
-              title="CANCEL"
-              color="red"
-              onPress={() => props.setIsAdding(false)}
-            />
+            <Button title="CANCEL" color="red" onPress={cancelHandler} />
           </View>
           <View style={styles.button}>
             <Button title="ADD" onPress={addGoalHandler} />
@@ -49,11 +66,11 @@ const GoalInput = (props) => {
 
 const styles = StyleSheet.create({
   input: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    padding: 10,
+    borderBottomWidth: 2,
+    padding: 5,
     width: "80%",
     marginBottom: 10,
+    fontSize: 25,
   },
   inputContainer: {
     flex: 1,

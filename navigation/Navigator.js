@@ -4,6 +4,8 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
+import Colors from "../constants/Colors";
+
 const defaultStackNavOptions = {
   // headerStyle: {
   //   backgroundColor: Platform.OS === "android" ? "black" : "white",
@@ -40,13 +42,33 @@ const SettingsNavigator = createStackNavigator(
   }
 );
 
-const MainNavigator = createDrawerNavigator({
+const RouteConfigs = {
   Goals: {
     screen: GoalsNavigator,
   },
   Settings: {
     screen: SettingsNavigator,
   },
-});
+};
+
+const DrawerNavigatorConfig = {
+  contentOptions: {
+    // add your styling here
+    activeTintColor: "#e91e63",
+    inactiveTintColor: "white",
+    itemsContainerStyle: {
+      marginVertical: 0,
+    },
+    iconContainerStyle: {
+      opacity: 1,
+    },
+  },
+  drawerBackgroundColor: Colors.accent, // sets background color of drawer
+};
+
+const MainNavigator = createDrawerNavigator(
+  RouteConfigs,
+  DrawerNavigatorConfig
+);
 
 export default createAppContainer(MainNavigator);
