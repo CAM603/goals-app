@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import GoalDetailScreen from "../screens/GoalDetailScreen";
 
 import Colors from "../constants/Colors";
 
@@ -11,7 +12,7 @@ const defaultStackNavOptions = {
   //   backgroundColor: Platform.OS === "android" ? "black" : "white",
   // },
   // headerTitleStyle: {
-  //   color: "black",
+  //   fontFamily: "open-sans",
   // },
   // headerBackTitleStyle: {
   //   color: "black",
@@ -23,6 +24,7 @@ const defaultStackNavOptions = {
 const GoalsNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
+    Goal: { screen: GoalDetailScreen },
   },
   {
     mode: "modal",

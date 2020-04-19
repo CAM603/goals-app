@@ -18,7 +18,12 @@ const GoalList = (props) => {
           keyExtractor={(item, index) => item.id.toString()}
           data={goals}
           renderItem={(itemData) => (
-            <GoalItem title={itemData.item.goal} id={itemData.item.id} />
+            <GoalItem
+              goal={itemData.item}
+              title={itemData.item.goal}
+              id={itemData.item.id}
+              {...props}
+            />
           )}
         />
       )}

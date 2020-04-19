@@ -44,7 +44,7 @@ const HomeScreen = (props) => {
       ]}
     >
       <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
-      {goals.length === 0 && !loading ? <NoGoals /> : <GoalList />}
+      {goals.length === 0 && !loading ? <NoGoals /> : <GoalList {...props} />}
     </View>
   );
 };
@@ -59,7 +59,7 @@ HomeScreen.navigationOptions = (navData) => {
     },
     headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
     headerTitleStyle: {
-      // fontWeight: "bold",
+      fontFamily: "open-sans-bold",
     },
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>

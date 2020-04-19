@@ -16,6 +16,7 @@ const GoalItem = (props) => {
         { borderBottomColor: darkMode ? Colors.dark.text : Colors.light.text },
       ]}
       activeOpacity={0.7}
+      onPress={() => props.navigation.navigate("Goal", { goal: props.goal })}
     >
       <Text
         style={[
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontFamily: "open-sans-bold",
   },
 });
 

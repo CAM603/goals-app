@@ -82,7 +82,7 @@ SettingsScreen.navigationOptions = (navData) => {
     },
     headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
     headerTitleStyle: {
-      // fontWeight: "bold",
+      fontFamily: "open-sans-bold",
     },
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
