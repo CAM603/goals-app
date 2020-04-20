@@ -14,7 +14,12 @@ const GoalItem = (props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={() => props.navigation.navigate("Goal", { goal: props.goal })}
+      onPress={() =>
+        props.navigation.navigate("Goal", {
+          goal: props.goal,
+          darkMode: darkMode,
+        })
+      }
     >
       <Container style={styles.listItem}>
         <CustomText style={styles.title}>{props.title}</CustomText>

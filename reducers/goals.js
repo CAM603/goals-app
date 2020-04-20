@@ -3,6 +3,7 @@ import {
   ADD_GOAL,
   REMOVE_GOAL,
   TOGGLE_DARK_MODE,
+  GET_SETTINGS,
 } from "../actions/goals";
 
 const initialState = {
@@ -22,6 +23,8 @@ const goalsReducer = (state = initialState, action) => {
       return { ...state, loading: true };
     case TOGGLE_DARK_MODE:
       return { ...state, darkMode: !state.darkMode };
+    case GET_SETTINGS:
+      return { ...state, settings: action.payload };
     default:
       return state;
   }

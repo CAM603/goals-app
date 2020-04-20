@@ -27,7 +27,7 @@ const GoalsNavigator = createStackNavigator(
     Goal: { screen: GoalDetailScreen },
   },
   {
-    mode: "modal",
+    // mode: "modal",
 
     defaultNavigationOptions: defaultStackNavOptions,
   }

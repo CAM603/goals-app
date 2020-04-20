@@ -6,7 +6,7 @@ import CustomText from "../components/CustomText";
 const Loading = (props) => {
   return (
     <Container style={styles.container}>
-      <CustomText style={styles.text}>Loading..</CustomText>
+      <CustomText style={styles.text}>Loading...</CustomText>
     </Container>
   );
 };

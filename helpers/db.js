@@ -173,7 +173,7 @@ export const deleteGoal = (goalId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "DELETE FROM goals where id = ?",
+        "DELETE FROM goals WHERE id = ?",
         [goalId],
         // Success
         (_, result) => {
@@ -183,6 +183,26 @@ export const deleteGoal = (goalId) => {
         (_, err) => {
           reject();
           console.log(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
+export const updateSetting = () => {
+  const promise = new Promise((resolve, reject) => {
+    db2.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE settings SET active = ABS(active - 1) WHERE id = 1",
+        [],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
         }
       );
     });

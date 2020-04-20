@@ -21,20 +21,20 @@ init()
     console.log(err);
   });
 
-// init2()
-//   .then(async () => {
-//     console.log("Initailized settings database");
-//     const res = await fetchSettings();
-//     if (res.rows._array.some((el) => el.setting === "Dark Mode")) {
-//       return;
-//     } else {
-//       insertSetting("Dark Mode");
-//     }
-//   })
-//   .catch((err) => {
-//     console.log("Initializing database failed");
-//     console.log(err);
-//   });
+init2()
+  .then(async () => {
+    console.log("Initailized settings database");
+    const res = await fetchSettings();
+    if (res.rows._array.some((el) => el.setting === "Dark Mode")) {
+      return;
+    } else {
+      insertSetting("Dark Mode");
+    }
+  })
+  .catch((err) => {
+    console.log("Initializing database failed");
+    console.log(err);
+  });
 
 const rootReducer = combineReducers({
   goals: goalsReducer,

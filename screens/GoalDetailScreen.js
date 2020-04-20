@@ -10,12 +10,6 @@ import CustomText from "../components/CustomText";
 
 const GoalDetailScreen = (props) => {
   const goal = props.navigation.getParam("goal");
-  const darkMode = useSelector((state) => state.goals.darkMode);
-
-  useEffect(() => {
-    props.navigation.setParams({ isDarkMode: darkMode });
-    props.navigation.setParams({ goal: goal });
-  }, []);
 
   return (
     <Container style={styles.container}>
@@ -25,13 +19,14 @@ const GoalDetailScreen = (props) => {
 };
 
 GoalDetailScreen.navigationOptions = (navData) => {
-  const isDarkMode = navData.navigation.getParam("isDarkMode");
+  const isDarkMode = navData.navigation.getParam("darkMode");
   const goal = navData.navigation.getParam("goal");
 
   return {
     headerTitle: goal.goal,
     headerStyle: {
-      backgroundColor: isDarkMode ? Colors.dark.bg : Colors.light.bg,
+      backgroundColor: isDarkMode ? Colors.accent : Colors.light.bg,
+      // shadowColor: "transparent",
     },
     headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
     headerTitleStyle: {
@@ -40,9 +35,9 @@ GoalDetailScreen.navigationOptions = (navData) => {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="add"
-          iconName="md-add-circle"
-          onPress={navData.navigation.getParam("toggleAdding")}
+          title="edit"
+          iconName="ios-more"
+          onPress={() => console.log("edit")}
         />
       </HeaderButtons>
     ),
