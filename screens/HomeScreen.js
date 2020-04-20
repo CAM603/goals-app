@@ -8,6 +8,7 @@ import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
 import NoGoals from "../components/NoGoals";
+import Container from "../components/Container";
 import Colors from "../constants/Colors";
 
 const HomeScreen = (props) => {
@@ -37,15 +38,10 @@ const HomeScreen = (props) => {
   };
 
   return (
-    <View
-      style={[
-        styles.screen,
-        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
-      ]}
-    >
+    <Container style={styles.screen}>
       <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
       {goals.length === 0 && !loading ? <NoGoals /> : <GoalList {...props} />}
-    </View>
+    </Container>
   );
 };
 

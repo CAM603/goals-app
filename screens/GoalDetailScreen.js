@@ -5,6 +5,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
+import Container from "../components/Container";
+import CustomText from "../components/CustomText";
 
 const GoalDetailScreen = (props) => {
   const goal = props.navigation.getParam("goal");
@@ -16,21 +18,9 @@ const GoalDetailScreen = (props) => {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
-      ]}
-    >
-      <Text
-        style={[
-          styles.text,
-          { color: darkMode ? Colors.dark.text : Colors.light.text },
-        ]}
-      >
-        {goal.goal}
-      </Text>
-    </View>
+    <Container style={styles.container}>
+      <CustomText style={styles.text}>{goal.goal}</CustomText>
+    </Container>
   );
 };
 

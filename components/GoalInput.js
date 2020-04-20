@@ -3,6 +3,7 @@ import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addGoal } from "../actions/goals";
+import Container from "../components/Container";
 import Colors from "../constants/Colors";
 
 const GoalInput = (props) => {
@@ -30,12 +31,7 @@ const GoalInput = (props) => {
 
   return (
     <Modal visible={props.isAdding} animationType="slide">
-      <View
-        style={[
-          styles.inputContainer,
-          { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
-        ]}
-      >
+      <Container style={styles.inputContainer}>
         <TextInput
           placeholder="Goal"
           style={[
@@ -59,7 +55,7 @@ const GoalInput = (props) => {
             <Button title="ADD" onPress={addGoalHandler} />
           </View>
         </View>
-      </View>
+      </Container>
     </Modal>
   );
 };

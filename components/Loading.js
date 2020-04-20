@@ -1,29 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-import Colors from "../constants/Colors";
+import { StyleSheet } from "react-native";
+import Container from "./Container";
+import CustomText from "../components/CustomText";
 
-const Loading = () => {
-  const darkMode = useSelector((state) => state.goals.darkMode);
-
+const Loading = (props) => {
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
-      ]}
-    >
-      <Text
-        style={[
-          styles.text,
-          {
-            color: darkMode ? Colors.dark.text : Colors.light.text,
-          },
-        ]}
-      >
-        Loading...
-      </Text>
-    </View>
+    <Container style={styles.container}>
+      <CustomText style={styles.text}>Loading..</CustomText>
+    </Container>
   );
 };
 

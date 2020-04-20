@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { removeGoal } from "../actions/goals";
 import Colors from "../constants/Colors";
+import Container from "./Container";
+import CustomText from "../components/CustomText";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
@@ -11,22 +13,15 @@ const GoalItem = (props) => {
 
   return (
     <TouchableOpacity
-      style={[
-        styles.listItem,
-        { borderBottomColor: darkMode ? Colors.dark.text : Colors.light.text },
-      ]}
       activeOpacity={0.7}
       onPress={() => props.navigation.navigate("Goal", { goal: props.goal })}
     >
-      <Text
-        style={[
-          styles.title,
-          { color: darkMode ? Colors.dark.text : Colors.light.text },
-        ]}
-      >
-        {props.title}
-      </Text>
-      <Text onPress={() => dispatch(removeGoal(props.id))}>❌</Text>
+      <Container style={styles.listItem}>
+        <CustomText style={styles.title}>{props.title}</CustomText>
+        <CustomText onPress={() => dispatch(removeGoal(props.id))}>
+          ❌
+        </CustomText>
+      </Container>
     </TouchableOpacity>
   );
 };
@@ -39,6 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderBottomColor: Colors.accent,
   },
   title: {
     fontSize: 22,
