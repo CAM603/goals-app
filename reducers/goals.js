@@ -10,6 +10,7 @@ const initialState = {
   goals: [],
   settings: [],
   loading: false,
+  loadingSettings: false,
   darkMode: false,
 };
 
@@ -24,7 +25,7 @@ const goalsReducer = (state = initialState, action) => {
     case TOGGLE_DARK_MODE:
       return { ...state, darkMode: !state.darkMode };
     case GET_SETTINGS:
-      return { ...state, settings: action.payload };
+      return { ...state, settings: action.payload, loadingSettings: false };
     default:
       return state;
   }

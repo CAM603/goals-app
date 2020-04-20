@@ -190,22 +190,22 @@ export const deleteGoal = (goalId) => {
   return promise;
 };
 
-export const updateSetting = () => {
-  const promise = new Promise((resolve, reject) => {
-    db2.transaction((tx) => {
-      tx.executeSql(
-        "UPDATE settings SET active = ABS(active - 1) WHERE id = 1",
-        [],
-        // Success
-        (_, result) => {
-          resolve(result);
-        },
-        // Failure
-        (_, err) => {
-          reject();
-        }
-      );
-    });
-  });
-  return promise;
-};
+// export const updateDarkMode = () => {
+//   const promise = new Promise((resolve, reject) => {
+//     db2.transaction((tx) => {
+//       tx.executeSql(
+//         "UPDATE settings SET active = ABS(active - 1) WHERE id = 1",
+//         [],
+//         // Success
+//         (_, result) => {
+//           resolve(result);
+//         },
+//         // Failure
+//         (_, err) => {
+//           reject();
+//         }
+//       );
+//     });
+//   });
+//   return promise;
+// };

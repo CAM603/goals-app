@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getGoals, getSettings } from "../actions/goals";
+import { getGoals, getSettings, initializeSettings } from "../actions/goals";
 import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -17,10 +17,9 @@ const HomeScreen = (props) => {
   let dispatch = useDispatch();
 
   const goals = useSelector((state) => state.goals.goals);
-  const settings = useSelector((state) => state.goals.settings);
   const loading = useSelector((state) => state.goals.loading);
   const darkMode = useSelector((state) => state.goals.darkMode);
-  console.log(settings);
+
   // let dark = settings.find((el) => el.setting === "Dark Mode");
   // dark.active === 0 ? console.log("zero") : console.log("one");
 

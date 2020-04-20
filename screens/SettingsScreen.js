@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import HeaderButton from "../components/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { toggleDarkMode } from "../actions/goals";
+import { toggleDarkMode, initializeSettings } from "../actions/goals";
 import Colors from "../constants/Colors";
 
 const FilterSwitch = (props) => {
@@ -24,7 +24,7 @@ const FilterSwitch = (props) => {
         value={props.state}
         onValueChange={props.onChange}
         // trackColor={{ true: "yellow", false: "green" }}
-        thumbColor={Colors.accent}
+        // thumbColor={Colors.accent}
       />
     </View>
   );
@@ -36,20 +36,20 @@ const SettingsScreen = (props) => {
   const darkMode = useSelector((state) => state.goals.darkMode);
   const isDarkMode = props.navigation.getParam("isDarkMode");
 
-  const saveSettings = useCallback(() => {
-    const appliedSettings = {
-      hasDarkMode: darkMode,
-    };
-    console.log(appliedSettings);
-  }, [darkMode]);
+  // const saveSettings = useCallback(() => {
+  //   const appliedSettings = {
+  //     hasDarkMode: darkMode,
+  //   };
+  //   console.log(appliedSettings);
+  // }, [darkMode]);
 
   const toggle = () => {
     dispatch(toggleDarkMode());
   };
 
-  useEffect(() => {
-    props.navigation.setParams({ save: saveSettings });
-  }, [saveSettings]);
+  // useEffect(() => {
+  //   props.navigation.setParams({ save: saveSettings });
+  // }, [saveSettings]);
 
   useEffect(() => {
     props.navigation.setParams({ isDarkMode: darkMode });
