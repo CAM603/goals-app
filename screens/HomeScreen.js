@@ -10,6 +10,7 @@ import GoalList from "../components/GoalList";
 import NoGoals from "../components/NoGoals";
 import Container from "../components/Container";
 import Colors from "../constants/Colors";
+import Loading from "../components/Loading";
 
 const HomeScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -20,12 +21,8 @@ const HomeScreen = (props) => {
   const loading = useSelector((state) => state.goals.loading);
   const darkMode = useSelector((state) => state.goals.darkMode);
 
-  // let dark = settings.find((el) => el.setting === "Dark Mode");
-  // dark.active === 0 ? console.log("zero") : console.log("one");
-
   useEffect(() => {
     dispatch(getGoals());
-    dispatch(getSettings());
   }, []);
 
   useEffect(() => {
@@ -40,10 +37,18 @@ const HomeScreen = (props) => {
     setIsAdding(!isAdding);
   };
 
+  const renderHome = () => {
+    return (
+      <>
+        <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
+        {goals.length === 0 ? <NoGoals /> : <GoalList {...props} />}
+      </>
+    );
+  };
+
   return (
     <Container style={styles.screen}>
-      <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
-      {goals.length === 0 && !loading ? <NoGoals /> : <GoalList {...props} />}
+      {loading ? <Loading /> : renderHome()}
     </Container>
   );
 };

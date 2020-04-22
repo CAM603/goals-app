@@ -1,29 +1,22 @@
-export const GET_GOALS = "GET_GOALS";
+export const GET_GOALS_START = "GET_GOALS_START";
+export const GET_GOALS_SUCCESS = "GET_GOALS_SUCCESS";
+export const GET_GOALS_FAILURE = "GET_GOALS_FAILURE";
 export const ADD_GOAL = "ADD_GOAL";
 export const REMOVE_GOAL = "REMOVE_GOAL";
 export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
-export const GET_SETTINGS = "GET_SETTINGS";
-export const INITIALIZE_SETTINGS = "INITIALIZE_SETTINGS";
 
-import {
-  fetchGoals,
-  insertGoal,
-  deleteGoal,
-  fetchSettings,
-} from "../helpers/db";
+import { fetchGoals, insertGoal, deleteGoal } from "../helpers/db";
 
-export const getGoals = () => async (dispatch) => {
-  const res = await fetchGoals();
+export const getGoals = () => (dispatch) => {
+  dispatch({ type: GET_GOALS_START });
 
-  // console.log("result from actions:", res.rows._array);
-  dispatch({ type: GET_GOALS, payload: res.rows._array });
-};
-
-export const getSettings = () => async (dispatch) => {
-  const res = await fetchSettings();
-
-  // console.log("settings:", res.rows._array);
-  dispatch({ type: GET_SETTINGS, payload: res.rows._array });
+  fetchGoals()
+    .then((res) => {
+      dispatch({ type: GET_GOALS_SUCCESS, payload: res.rows._array });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_GOALS_FAILURE, payload: err });
+    });
 };
 
 export const addGoal = (goal) => async (dispatch) => {

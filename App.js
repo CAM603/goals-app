@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
-import { init, init2 } from "./helpers/db";
+import { init } from "./helpers/db";
 import GoalsNavigator from "./navigation/Navigator";
 import goalsReducer from "./reducers/goals";
 
@@ -15,15 +15,6 @@ enableScreens();
 init()
   .then(() => {
     console.log("Initailized goals database");
-  })
-  .catch((err) => {
-    console.log("Initializing database failed");
-    console.log(err);
-  });
-
-init2()
-  .then(async () => {
-    console.log("Initailized settings database");
   })
   .catch((err) => {
     console.log("Initializing database failed");

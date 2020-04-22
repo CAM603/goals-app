@@ -36,20 +36,9 @@ const SettingsScreen = (props) => {
   const darkMode = useSelector((state) => state.goals.darkMode);
   const isDarkMode = props.navigation.getParam("isDarkMode");
 
-  // const saveSettings = useCallback(() => {
-  //   const appliedSettings = {
-  //     hasDarkMode: darkMode,
-  //   };
-  //   console.log(appliedSettings);
-  // }, [darkMode]);
-
   const toggle = () => {
     dispatch(toggleDarkMode());
   };
-
-  // useEffect(() => {
-  //   props.navigation.setParams({ save: saveSettings });
-  // }, [saveSettings]);
 
   useEffect(() => {
     props.navigation.setParams({ isDarkMode: darkMode });
