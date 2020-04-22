@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getGoals, getSettings, initializeSettings } from "../actions/goals";
+import { getGoals, getDarkMode } from "../actions/goals";
 import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -19,10 +19,12 @@ const HomeScreen = (props) => {
 
   const goals = useSelector((state) => state.goals.goals);
   const loading = useSelector((state) => state.goals.loading);
+  const loadingDarkMode = useSelector((state) => state.goals.loadingDarkMode);
   const darkMode = useSelector((state) => state.goals.darkMode);
 
   useEffect(() => {
     dispatch(getGoals());
+    dispatch(getDarkMode());
   }, []);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const HomeScreen = (props) => {
 
   return (
     <Container style={styles.screen}>
-      {loading ? <Loading /> : renderHome()}
+      {loading || loadingDarkMode ? <Loading /> : renderHome()}
     </Container>
   );
 };

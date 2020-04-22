@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import HeaderButton from "../components/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { toggleDarkMode, initializeSettings } from "../actions/goals";
+import { toggleDarkMode, getDarkMode } from "../actions/goals";
 import Colors from "../constants/Colors";
+import Loading from "../components/Loading";
 
 const FilterSwitch = (props) => {
   return (
@@ -34,26 +35,21 @@ const SettingsScreen = (props) => {
   const dispatch = useDispatch();
 
   const darkMode = useSelector((state) => state.goals.darkMode);
-  const isDarkMode = props.navigation.getParam("isDarkMode");
 
   const toggle = () => {
     dispatch(toggleDarkMode());
   };
 
-  useEffect(() => {
-    props.navigation.setParams({ isDarkMode: darkMode });
-  }, [darkMode]);
-
   return (
     <View
       style={[
         styles.screen,
-        { backgroundColor: isDarkMode ? Colors.dark.bg : Colors.light.bg },
+        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
       ]}
     >
       <FilterSwitch
         label="Dark Mode"
-        isDarkMode={isDarkMode}
+        isDarkMode={darkMode}
         state={darkMode}
         onChange={() => toggle()}
       />
@@ -90,7 +86,7 @@ SettingsScreen.navigationOptions = (navData) => {
         <Item
           title="Save"
           iconName="ios-save"
-          onPress={navData.navigation.getParam("save")}
+          onPress={() => console.log(navData.theme)}
         />
       </HeaderButtons>
     ),
