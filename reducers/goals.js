@@ -2,6 +2,9 @@ import {
   GET_GOALS_START,
   GET_GOALS_SUCCESS,
   GET_GOALS_FAILURE,
+  GET_STEPS_START,
+  GET_STEPS_SUCCESS,
+  GET_STEPS_FAILURE,
   GET_DARK_MODE_START,
   GET_DARK_MODE_SUCCESS,
   GET_DARK_MODE_FAILURE,
@@ -20,7 +23,9 @@ const getDarkMode = async () => {
 
 const initialState = {
   goals: [],
+  steps: [],
   loading: false,
+  loadingSteps: false,
   loadingDarkMode: false,
   darkMode: getDarkMode(),
   error: "",
@@ -33,7 +38,13 @@ const goalsReducer = (state = initialState, action) => {
     case GET_GOALS_SUCCESS:
       return { ...state, goals: action.payload, loading: false };
     case GET_GOALS_FAILURE:
-      return { ...state, errors: action.payload, loading: false };
+      return { ...state, error: action.payload, loading: false };
+    case GET_STEPS_START:
+      return { ...state, loadingSteps: true };
+    case GET_STEPS_SUCCESS:
+      return { ...state, steps: action.payload, loadingSteps: false };
+    case GET_STEPS_FAILURE:
+      return { ...state, error: action.payload, loadingSteps: false };
     case ADD_GOAL:
       return { ...state, loading: true };
     case REMOVE_GOAL:

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getGoals, getDarkMode } from "../actions/goals";
+import { getGoals, getDarkMode, getSteps } from "../actions/goals";
 import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -20,20 +20,16 @@ const HomeScreen = (props) => {
   const goals = useSelector((state) => state.goals.goals);
   const loading = useSelector((state) => state.goals.loading);
   const loadingDarkMode = useSelector((state) => state.goals.loadingDarkMode);
-  const darkMode = useSelector((state) => state.goals.darkMode);
 
   useEffect(() => {
     dispatch(getGoals());
     dispatch(getDarkMode());
+    dispatch(getSteps());
   }, []);
 
   useEffect(() => {
     props.navigation.setParams({ toggleAdding: toggleAdd });
   }, [toggleAdd]);
-
-  useEffect(() => {
-    props.navigation.setParams({ isDarkMode: darkMode });
-  }, [darkMode]);
 
   const toggleAdd = () => {
     setIsAdding(!isAdding);
@@ -56,15 +52,13 @@ const HomeScreen = (props) => {
 };
 
 HomeScreen.navigationOptions = (navData) => {
-  const isDarkMode = navData.navigation.getParam("isDarkMode");
-
   return {
     headerTitle: "My Goals",
     headerStyle: {
-      backgroundColor: isDarkMode ? Colors.accent : Colors.light.bg,
+      backgroundColor: Colors.accent,
       // shadowColor: "transparent",
     },
-    headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
+    headerTintColor: Colors.dark.text,
     headerTitleStyle: {
       fontFamily: "open-sans-bold",
     },

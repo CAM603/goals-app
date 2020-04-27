@@ -1,12 +1,11 @@
-import React, { useEffect, useCallback } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import HeaderButton from "../components/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { toggleDarkMode, getDarkMode } from "../actions/goals";
+import { toggleDarkMode } from "../actions/goals";
 import Colors from "../constants/Colors";
-import Loading from "../components/Loading";
 
 const FilterSwitch = (props) => {
   return (
@@ -58,15 +57,13 @@ const SettingsScreen = (props) => {
 };
 
 SettingsScreen.navigationOptions = (navData) => {
-  const isDarkMode = navData.navigation.getParam("isDarkMode");
-
   return {
     headerTitle: "Settings",
     headerStyle: {
-      backgroundColor: isDarkMode ? Colors.accent : Colors.light.bg,
+      backgroundColor: Colors.accent,
       // shadowColor: "transparent",
     },
-    headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
+    headerTintColor: Colors.dark.text,
     headerTitleStyle: {
       fontFamily: "open-sans-bold",
     },
