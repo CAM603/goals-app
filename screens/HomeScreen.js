@@ -24,7 +24,6 @@ const HomeScreen = (props) => {
   useEffect(() => {
     dispatch(getGoals());
     dispatch(getDarkMode());
-    dispatch(getSteps());
   }, []);
 
   useEffect(() => {

@@ -23,6 +23,7 @@ import {
   insertStep,
 } from "../helpers/db";
 
+// Gets all goals
 export const getGoals = () => (dispatch) => {
   dispatch({ type: GET_GOALS_START });
 
@@ -36,10 +37,11 @@ export const getGoals = () => (dispatch) => {
     });
 };
 
-export const getSteps = () => (dispatch) => {
+// Gets all steps for a goal
+export const getSteps = (goal_id) => (dispatch) => {
   dispatch({ type: GET_STEPS_START });
 
-  fetchSteps()
+  fetchSteps(goal_id)
     .then((res) => {
       dispatch({ type: GET_STEPS_SUCCESS, payload: res.rows._array });
       console.log("STEPS", res.rows._array);
@@ -50,24 +52,28 @@ export const getSteps = () => (dispatch) => {
     });
 };
 
+// Adds a goal and then gets all goals
 export const addGoal = (goal) => async (dispatch) => {
   dispatch({ type: ADD_GOAL });
   await insertGoal(goal);
   dispatch(getGoals());
 };
 
+// Adds a step and then gets all steps
 export const addStep = (step, goal_id) => async (dispatch) => {
   dispatch({ type: ADD_STEP });
   await insertStep(step, goal_id);
-  dispatch(getSteps());
+  dispatch(getSteps(goal_id));
 };
 
+// Removes a goal and then gets all goals
 export const removeGoal = (goalID) => async (dispatch) => {
   dispatch({ type: REMOVE_GOAL });
   await deleteGoal(goalID);
   dispatch(getGoals());
 };
 
+// Checks for darkmode setting in async storage, sets to false if not there
 export const getDarkMode = () => async (dispatch) => {
   dispatch({ type: GET_DARK_MODE_START });
 
@@ -82,6 +88,7 @@ export const getDarkMode = () => async (dispatch) => {
   }
 };
 
+// Toggles darkmode boolean
 export const toggleDarkMode = () => async (dispatch) => {
   dispatch({ type: TOGGLE_DARK_MODE });
 };

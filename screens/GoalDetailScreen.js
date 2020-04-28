@@ -1,21 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, TextInput, Text, Modal, StyleSheet } from "react-native";
+import {
+  View,
+  Button,
+  TextInput,
+  Text,
+  FlatList,
+  Modal,
+  StyleSheet,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButton from "../components/HeaderButton";
+import Loading from "../components/Loading";
 import Colors from "../constants/Colors";
 import Container from "../components/Container";
 import CustomText from "../components/CustomText";
-import { addStep } from "../actions/goals";
+import { addStep, getSteps } from "../actions/goals";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
   const [enteredStep, setEnteredStep] = useState("");
+
   const goal = props.navigation.getParam("goal");
+
+  const steps = useSelector((state) => state.goals.steps);
   const darkMode = useSelector((state) => state.goals.darkMode);
+  const loadingSteps = useSelector((state) => state.goals.loadingSteps);
+
   const dispatch = useDispatch();
-  console.log(goal);
+
+  useEffect(() => {
+    dispatch(getSteps(goal.id));
+  }, []);
 
   const toggleAdd = () => {
     setIsAdding(!isAdding);
@@ -39,10 +56,19 @@ const GoalDetailScreen = (props) => {
     setEnteredStep("");
   };
 
-  useEffect(() => {}, []);
-
+  console.log("Goal", goal);
+  console.log("Steps", steps);
   return (
     <View style={styles.screen}>
+      {loadingSteps ? (
+        <Loading />
+      ) : (
+        <FlatList
+          keyExtractor={(item) => item.id.toString()}
+          data={steps}
+          renderItem={(itemData) => <Text>{itemData.item.step}</Text>}
+        />
+      )}
       <Button title="add step" onPress={toggleAdd} />
       <Modal visible={isAdding} animationType="slide">
         <Container style={styles.inputContainer}>
@@ -105,6 +131,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
   input: {
     borderBottomWidth: 2,

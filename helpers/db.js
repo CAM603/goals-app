@@ -2,6 +2,7 @@ import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabase("goals.db");
 
+// Initialize db with a goals table and a steps table (one goal to many steps relationship)
 export const init = () => {
   db.exec([{ sql: "PRAGMA foreign_keys = ON;", args: [] }], false, () =>
     console.log("Foreign keys turned on")
@@ -38,7 +39,7 @@ export const init = () => {
   });
   return promise;
 };
-
+// Create a new goal in the database
 export const insertGoal = (goal) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -59,7 +60,7 @@ export const insertGoal = (goal) => {
   });
   return promise;
 };
-
+// Create a new step for a goal
 export const insertStep = (step, goal_id) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -80,7 +81,7 @@ export const insertStep = (step, goal_id) => {
   });
   return promise;
 };
-
+// Get all goals in database
 export const fetchGoals = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -100,8 +101,8 @@ export const fetchGoals = () => {
   });
   return promise;
 };
-
-export const fetchStep = (id) => {
+// Gets all steps for a goal
+export const fetchSteps = (id) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -121,26 +122,26 @@ export const fetchStep = (id) => {
   return promise;
 };
 
-export const fetchSteps = () => {
-  const promise = new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM steps",
-        [],
-        // Success
-        (_, result) => {
-          resolve(result);
-        },
-        // Failure
-        (_, err) => {
-          reject();
-        }
-      );
-    });
-  });
-  return promise;
-};
-
+// export const fetchSteps = () => {
+//   const promise = new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "SELECT * FROM steps",
+//         [],
+//         // Success
+//         (_, result) => {
+//           resolve(result);
+//         },
+//         // Failure
+//         (_, err) => {
+//           reject();
+//         }
+//       );
+//     });
+//   });
+//   return promise;
+// };
+// Deletes all goals
 export const deleteGoals = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -162,7 +163,7 @@ export const deleteGoals = () => {
 
   return promise;
 };
-
+// Deletes a single goal and it's associated steps
 export const deleteGoal = (goalId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {

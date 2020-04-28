@@ -24,7 +24,7 @@ const getDarkMode = async () => {
 const initialState = {
   goals: [],
   steps: [],
-  loading: false,
+  loadingGoals: false,
   loadingSteps: false,
   loadingDarkMode: false,
   darkMode: getDarkMode(),
@@ -46,7 +46,7 @@ const goalsReducer = (state = initialState, action) => {
     case GET_STEPS_FAILURE:
       return { ...state, error: action.payload, loadingSteps: false };
     case ADD_GOAL:
-      return { ...state, loading: true };
+      return { ...state, loadingSteps: true };
     case REMOVE_GOAL:
       return { ...state, loading: true };
     case GET_DARK_MODE_START:
