@@ -15,12 +15,11 @@ import HeaderButton from "../components/HeaderButton";
 import Loading from "../components/Loading";
 import Colors from "../constants/Colors";
 import Container from "../components/Container";
-import CustomText from "../components/CustomText";
-import { addStep, getSteps } from "../actions/goals";
+import { getSteps } from "../actions/goals";
+import StepInput from "../components/StepInput";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
-  const [enteredStep, setEnteredStep] = useState("");
 
   const goal = props.navigation.getParam("goal");
 
@@ -38,28 +37,8 @@ const GoalDetailScreen = (props) => {
     setIsAdding(!isAdding);
   };
 
-  const stepInputHandler = (text) => {
-    setEnteredStep(text);
-  };
-
-  const cancelHandler = () => {
-    setIsAdding(false);
-    setEnteredStep("");
-  };
-
-  const addStepHandler = () => {
-    if (!enteredStep) {
-      return;
-    }
-    setIsAdding(false);
-    dispatch(addStep(enteredStep, goal.id));
-    setEnteredStep("");
-  };
-
-  console.log("Goal", goal);
-  console.log("Steps", steps);
   return (
-    <View style={styles.screen}>
+    <Container style={styles.screen}>
       {loadingSteps ? (
         <Loading />
       ) : (
@@ -70,34 +49,8 @@ const GoalDetailScreen = (props) => {
         />
       )}
       <Button title="add step" onPress={toggleAdd} />
-      <Modal visible={isAdding} animationType="slide">
-        <Container style={styles.inputContainer}>
-          <TextInput
-            placeholder="Step"
-            style={[
-              styles.input,
-              {
-                borderBottomColor: darkMode
-                  ? Colors.dark.text
-                  : Colors.light.text,
-                color: darkMode ? Colors.dark.text : Colors.light.text,
-              },
-            ]}
-            onChangeText={stepInputHandler}
-            value={enteredStep}
-            underlineColorAndroid="transparent"
-          />
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Button title="CANCEL" color="red" onPress={cancelHandler} />
-            </View>
-            <View style={styles.button}>
-              <Button title="ADD" onPress={addStepHandler} />
-            </View>
-          </View>
-        </Container>
-      </Modal>
-    </View>
+      <StepInput isAdding={isAdding} setIsAdding={setIsAdding} />
+    </Container>
   );
 };
 
