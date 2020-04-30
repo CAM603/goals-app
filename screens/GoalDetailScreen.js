@@ -49,7 +49,7 @@ const GoalDetailScreen = (props) => {
           alignItems: "center",
         }}
       >
-        <Description description={goal.description} />
+        <Description goal={goal} />
         <Text
           style={{
             fontSize: 30,

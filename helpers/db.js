@@ -60,6 +60,28 @@ export const insertGoal = (goal) => {
   });
   return promise;
 };
+// Update a goal's description
+export const updateGoalDescription = (description, goal_id) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE goals SET description = ? WHERE id = ?",
+        [description, goal_id],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
+          console.log(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 // Create a new step for a goal
 export const insertStep = (step, goal_id) => {
   const promise = new Promise((resolve, reject) => {
@@ -83,7 +105,7 @@ export const insertStep = (step, goal_id) => {
 };
 
 // Create a new step for a goal
-export const completeStep = (step_id) => {
+export const toggleStepCompleted = (step_id) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(

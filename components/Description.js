@@ -4,11 +4,19 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Button,
   StyleSheet,
 } from "react-native";
+import { useDispatch } from "react-redux";
 
-const Description = ({ description }) => {
+import { addDescription } from "../actions/goals";
+
+const Description = ({ goal }) => {
   const [editing, setEditing] = useState(false);
+  const [words, setWords] = useState(goal.description);
+
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       {editing ? (
@@ -16,6 +24,15 @@ const Description = ({ description }) => {
           <TextInput
             style={{ fontSize: 16, padding: 5 }}
             placeholder="edit description"
+            value={words}
+            onChangeText={(text) => setWords(text)}
+          />
+          <Button
+            title="Update"
+            onPress={() => {
+              dispatch(addDescription(words, goal.id));
+              setEditing(false);
+            }}
           />
         </View>
       ) : (
@@ -24,7 +41,7 @@ const Description = ({ description }) => {
           style={styles.description}
         >
           <Text style={styles.descriptionText}>
-            {description ? description : "Describe your goal"}
+            {goal.description ? words : "Describe your goal"}
           </Text>
         </TouchableOpacity>
       )}
