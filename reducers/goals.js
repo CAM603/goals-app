@@ -11,6 +11,7 @@ import {
   ADD_GOAL,
   REMOVE_GOAL,
   TOGGLE_DARK_MODE,
+  TOGGLE_COMPLETED,
 } from "../actions/goals";
 
 import { AsyncStorage } from "react-native";
@@ -58,6 +59,8 @@ const goalsReducer = (state = initialState, action) => {
     case TOGGLE_DARK_MODE:
       AsyncStorage.setItem("DARKMODE", JSON.stringify(!state.darkMode));
       return { ...state, darkMode: !state.darkMode };
+    case TOGGLE_COMPLETED:
+      return { ...state };
     default:
       return state;
   }

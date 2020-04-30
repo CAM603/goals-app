@@ -16,7 +16,7 @@ const StepInput = (props) => {
       return;
     }
     props.setIsAdding(false);
-    dispatch(addStep(enteredStep, goal.id));
+    dispatch(addStep(enteredStep, props.goal.id));
     setEnteredStep("");
   };
 

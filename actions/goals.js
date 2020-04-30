@@ -13,14 +13,15 @@ export const ADD_GOAL = "ADD_GOAL";
 export const ADD_STEP = "ADD_STEP";
 export const REMOVE_GOAL = "REMOVE_GOAL";
 export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
+export const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 
 import {
   fetchGoals,
   fetchSteps,
-  fetchStep,
   insertGoal,
   deleteGoal,
   insertStep,
+  completeStep,
 } from "../helpers/db";
 
 // Gets all goals
@@ -91,4 +92,10 @@ export const getDarkMode = () => async (dispatch) => {
 // Toggles darkmode boolean
 export const toggleDarkMode = () => async (dispatch) => {
   dispatch({ type: TOGGLE_DARK_MODE });
+};
+
+// Toggles completed field for step
+export const toggleCompleted = (step_id, goal_id) => async (dispatch) => {
+  dispatch({ type: TOGGLE_COMPLETED });
+  await completeStep(step_id);
 };

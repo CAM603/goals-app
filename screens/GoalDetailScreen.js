@@ -41,18 +41,39 @@ const GoalDetailScreen = (props) => {
 
   return (
     <Container style={styles.screen}>
-      <Description description={goal.description} />
-      {loadingSteps ? (
-        <Loading />
-      ) : (
-        <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          data={steps}
-          renderItem={(itemData) => <Step step={itemData.item} />}
-        />
-      )}
-      <Button title="add step" onPress={toggleAdd} />
-      <StepInput isAdding={isAdding} setIsAdding={setIsAdding} />
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Description description={goal.description} />
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+            backgroundColor: "black",
+            width: "100%",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          Steps to complete goal
+        </Text>
+        {loadingSteps ? (
+          <Loading />
+        ) : (
+          <FlatList
+            keyExtractor={(item) => item.id.toString()}
+            data={steps}
+            renderItem={(itemData) => <Step step={itemData.item} goal={goal} />}
+          />
+        )}
+        <Button title="add step" onPress={toggleAdd} />
+      </View>
+      <StepInput isAdding={isAdding} setIsAdding={setIsAdding} goal={goal} />
     </Container>
   );
 };
@@ -87,7 +108,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   input: {
     borderBottomWidth: 2,

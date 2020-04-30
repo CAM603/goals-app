@@ -81,6 +81,29 @@ export const insertStep = (step, goal_id) => {
   });
   return promise;
 };
+
+// Create a new step for a goal
+export const completeStep = (step_id) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE steps SET completed = ((completed | 1) - (completed & 1)) WHERE id = ?",
+        [step_id],
+        // Success
+        (_, result) => {
+          resolve(result);
+        },
+        // Failure
+        (_, err) => {
+          reject();
+          console.log(err);
+        }
+      );
+    });
+  });
+  return promise;
+};
+
 // Get all goals in database
 export const fetchGoals = () => {
   const promise = new Promise((resolve, reject) => {
