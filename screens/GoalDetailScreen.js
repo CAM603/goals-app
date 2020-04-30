@@ -17,6 +17,8 @@ import Colors from "../constants/Colors";
 import Container from "../components/Container";
 import { getSteps } from "../actions/goals";
 import StepInput from "../components/StepInput";
+import Step from "../components/Step";
+import Description from "../components/Description";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -39,13 +41,14 @@ const GoalDetailScreen = (props) => {
 
   return (
     <Container style={styles.screen}>
+      <Description description={goal.description} />
       {loadingSteps ? (
         <Loading />
       ) : (
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           data={steps}
-          renderItem={(itemData) => <Text>{itemData.item.step}</Text>}
+          renderItem={(itemData) => <Step step={itemData.item} />}
         />
       )}
       <Button title="add step" onPress={toggleAdd} />
