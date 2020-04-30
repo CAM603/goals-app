@@ -13,7 +13,9 @@ import { addDescription } from "../actions/goals";
 
 const Description = ({ goal }) => {
   const [editing, setEditing] = useState(false);
-  const [words, setWords] = useState(goal.description);
+  const [words, setWords] = useState(
+    goal.description ? goal.description : "Add a description"
+  );
 
   const dispatch = useDispatch();
 
@@ -26,6 +28,8 @@ const Description = ({ goal }) => {
             placeholder="edit description"
             value={words}
             onChangeText={(text) => setWords(text)}
+            multiline={true}
+            autoFocus={true}
           />
           <Button
             title="Update"
@@ -40,9 +44,7 @@ const Description = ({ goal }) => {
           onPress={() => setEditing(true)}
           style={styles.description}
         >
-          <Text style={styles.descriptionText}>
-            {goal.description ? words : "Describe your goal"}
-          </Text>
+          <Text style={styles.descriptionText}>{words}</Text>
         </TouchableOpacity>
       )}
     </View>
