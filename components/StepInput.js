@@ -28,7 +28,6 @@ const StepInput = (props) => {
   return (
     <CustomModal
       isVisible={props.isAdding}
-      placeholder="Step"
       inputHandler={stepInputHandler}
       value={enteredStep}
       cancelHandler={cancelHandler}

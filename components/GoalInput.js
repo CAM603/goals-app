@@ -29,7 +29,6 @@ const GoalInput = (props) => {
   return (
     <CustomModal
       isVisible={props.isAdding}
-      placeholder="Goal"
       inputHandler={goalInputHandler}
       value={enteredGoal}
       cancelHandler={cancelHandler}

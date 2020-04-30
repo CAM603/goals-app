@@ -1,33 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Button,
-  TextInput,
-  Text,
-  FlatList,
-  Modal,
-  StyleSheet,
-} from "react-native";
+import { View, Button, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButton from "../components/HeaderButton";
-import Loading from "../components/Loading";
 import Colors from "../constants/Colors";
 import Container from "../components/Container";
 import { getSteps } from "../actions/goals";
 import StepInput from "../components/StepInput";
-import Step from "../components/Step";
 import Description from "../components/Description";
+import StepList from "../components/StepList";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
 
   const goal = props.navigation.getParam("goal");
-
-  const steps = useSelector((state) => state.goals.steps);
-  const darkMode = useSelector((state) => state.goals.darkMode);
-  const loadingSteps = useSelector((state) => state.goals.loadingSteps);
 
   const dispatch = useDispatch();
 
@@ -50,27 +37,7 @@ const GoalDetailScreen = (props) => {
         }}
       >
         <Description goal={goal} />
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-            backgroundColor: "black",
-            width: "100%",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          Steps to complete goal
-        </Text>
-        {loadingSteps ? (
-          <Loading />
-        ) : (
-          <FlatList
-            keyExtractor={(item) => item.id.toString()}
-            data={steps}
-            renderItem={(itemData) => <Step step={itemData.item} goal={goal} />}
-          />
-        )}
+        <StepList goal={goal} />
         <Button title="add step" onPress={toggleAdd} />
       </View>
       <StepInput isAdding={isAdding} setIsAdding={setIsAdding} goal={goal} />
