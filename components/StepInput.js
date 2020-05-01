@@ -32,6 +32,7 @@ const StepInput = (props) => {
       value={enteredStep}
       cancelHandler={cancelHandler}
       submitHandler={addStepHandler}
+      title="Add a step!"
     />
   );
 };

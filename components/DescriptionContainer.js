@@ -20,10 +20,7 @@ const DescriptionContainer = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    borderWidth: 3,
-    height: 100,
-    marginVertical: 10,
+    width: "100%",
   },
 });
 

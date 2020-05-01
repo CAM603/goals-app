@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Container from "../components/Container";
 import Colors from "../constants/Colors";
 import CustomTextInput from "../components/CustomTextInput";
+import CustomText from "./CustomText";
 
 const CustomModal = (props) => {
   const darkMode = useSelector((state) => state.goals.darkMode);
@@ -12,6 +13,7 @@ const CustomModal = (props) => {
   return (
     <Modal visible={props.isVisible} animationType="slide">
       <Container style={styles.inputContainer}>
+        <CustomText style={styles.title}>{props.title}</CustomText>
         <CustomTextInput
           style={styles.input}
           onChangeText={props.inputHandler}
@@ -31,6 +33,10 @@ const CustomModal = (props) => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 35,
+    fontWeight: "bold",
+  },
   input: {
     borderBottomWidth: 2,
     padding: 5,

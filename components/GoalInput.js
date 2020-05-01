@@ -33,6 +33,7 @@ const GoalInput = (props) => {
       value={enteredGoal}
       cancelHandler={cancelHandler}
       submitHandler={addGoalHandler}
+      title="What is your Goal?"
     />
   );
 };

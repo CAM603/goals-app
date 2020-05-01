@@ -13,6 +13,7 @@ const CustomTextInput = (props) => {
       value={props.value}
       autoFocus={true}
       underlineColorAndroid="transparent"
+      multiline={true}
       style={[
         props.style,
         {

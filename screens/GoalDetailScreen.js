@@ -10,6 +10,7 @@ import { getSteps } from "../actions/goals";
 import StepInput from "../components/StepInput";
 import Description from "../components/Description";
 import StepList from "../components/StepList";
+import CustomText from "../components/CustomText";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -37,8 +38,29 @@ const GoalDetailScreen = (props) => {
         }}
       >
         <Description goal={goal} />
+        <View
+          style={{
+            backgroundColor: "grey",
+            width: "100%",
+            alignItems: "center",
+            borderBottomWidth: 2,
+            borderTopWidth: 2,
+            borderBottomColor: "black",
+            borderTopColor: "black",
+          }}
+        >
+          <CustomText
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              padding: 3,
+            }}
+          >
+            What do you need to do?
+          </CustomText>
+        </View>
         <StepList goal={goal} />
-        <Button title="add step" onPress={toggleAdd} />
+        <Button title="ADD STEP" onPress={toggleAdd} />
       </View>
       <StepInput isAdding={isAdding} setIsAdding={setIsAdding} goal={goal} />
     </Container>
