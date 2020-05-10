@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   step: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "bold",
   },
 });

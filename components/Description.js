@@ -34,19 +34,14 @@ const Description = ({ goal }) => {
     <View style={styles.container}>
       {editing ? (
         <DescriptionContainer>
-          <View style={{ alignItems: "center", backgroundColor: "grey" }}>
-            <CustomText style={styles.title}>
-              Describe your goal of {goal.goal}
-            </CustomText>
-          </View>
-          <View style={{ alignItems: "flex-end" }}>
+          <View style={styles.editContainer}>
             <TouchableOpacity onPress={handleEdit}>
-              <CustomText style={{ fontWeight: "bold" }}>Update</CustomText>
+              <CustomText style={styles.editText}>Update</CustomText>
             </TouchableOpacity>
           </View>
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={styles.inputContainer}>
             <CustomTextInput
-              style={{ fontSize: 16, padding: 5, color: "white" }}
+              style={styles.input}
               value={words}
               onChangeText={handleChange}
             />
@@ -54,19 +49,12 @@ const Description = ({ goal }) => {
         </DescriptionContainer>
       ) : (
         <DescriptionContainer>
-          <View style={{ alignItems: "center", backgroundColor: "grey" }}>
-            <CustomText style={styles.title}>
-              Describe your goal to {goal.goal}
-            </CustomText>
-          </View>
-          <View style={{ alignItems: "flex-end" }}>
+          <View style={styles.editContainer}>
             <TouchableOpacity onPress={toggle}>
-              <CustomText style={{ fontWeight: "bold", paddingRight: 5 }}>
-                EDIT
-              </CustomText>
+              <CustomText style={styles.editText}>EDIT</CustomText>
             </TouchableOpacity>
           </View>
-          <View style={{ paddingHorizontal: 10 }}>
+          <View style={styles.inputContainer}>
             <CustomText style={styles.descriptionText}>
               {words ? words : "Describe your goal!"}
             </CustomText>
@@ -79,8 +67,11 @@ const Description = ({ goal }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "95%",
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: "black",
+    marginVertical: 15,
   },
   title: {
     fontSize: 16,
@@ -88,6 +79,20 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   descriptionText: {
+    fontSize: 16,
+    padding: 5,
+  },
+  editContainer: {
+    alignItems: "flex-end",
+  },
+  editText: {
+    fontWeight: "bold",
+    paddingRight: 5,
+  },
+  inputContainer: {
+    paddingHorizontal: 15,
+  },
+  input: {
     fontSize: 16,
     padding: 5,
   },

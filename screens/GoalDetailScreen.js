@@ -11,11 +11,13 @@ import StepInput from "../components/StepInput";
 import Description from "../components/Description";
 import StepList from "../components/StepList";
 import CustomText from "../components/CustomText";
+import NoSteps from "../components/NoSteps";
 
 const GoalDetailScreen = (props) => {
   const [isAdding, setIsAdding] = useState(false);
 
   const goal = props.navigation.getParam("goal");
+  const steps = useSelector((state) => state.goals.steps);
 
   const dispatch = useDispatch();
 
@@ -29,37 +31,9 @@ const GoalDetailScreen = (props) => {
 
   return (
     <Container style={styles.screen}>
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.container}>
         <Description goal={goal} />
-        <View
-          style={{
-            backgroundColor: "grey",
-            width: "100%",
-            alignItems: "center",
-            borderBottomWidth: 2,
-            borderTopWidth: 2,
-            borderBottomColor: "black",
-            borderTopColor: "black",
-          }}
-        >
-          <CustomText
-            style={{
-              fontSize: 30,
-              fontWeight: "bold",
-              padding: 3,
-            }}
-          >
-            What do you need to do?
-          </CustomText>
-        </View>
-        <StepList goal={goal} />
+        {steps.length === 0 ? <NoSteps /> : <StepList goal={goal} />}
         <Button title="ADD STEP" onPress={toggleAdd} />
       </View>
       <StepInput isAdding={isAdding} setIsAdding={setIsAdding} goal={goal} />
@@ -98,26 +72,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
+    paddingBottom: 25,
   },
-  input: {
-    borderBottomWidth: 2,
-    padding: 5,
-    width: "80%",
-    marginBottom: 10,
-    fontSize: 25,
-  },
-  inputContainer: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    width: "50%",
+    width: "100%",
     justifyContent: "space-between",
-  },
-  button: {
-    width: 100,
+    alignItems: "center",
   },
 });
 
