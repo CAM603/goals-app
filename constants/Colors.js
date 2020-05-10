@@ -1,11 +1,25 @@
 export default {
   dark: {
-    bg: "black",
+    bg: "#121212",
+    surface: "#1E1E1E",
+    primary: "#BB86FC",
+    secondary: "#00DAC6",
+    on_background: "",
+    on_surface: "#E1E1E1",
+    on_primary: "",
+    on_secondary: "",
     text: "white",
   },
   light: {
     bg: "white",
-    text: "black",
+    surface: "",
+    primary: "",
+    secondary: "",
+    on_background: "",
+    on_surface: "",
+    on_primary: "",
+    on_secondary: "",
+    text: "#121212",
   },
   accent: "#262A2C",
 };

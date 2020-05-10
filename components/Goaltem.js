@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomColor: Colors.accent,
+    backgroundColor: Colors.dark.surface,
   },
   title: {
     fontSize: 22,

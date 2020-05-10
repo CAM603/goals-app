@@ -10,7 +10,12 @@ const DescriptionContainer = (props) => {
     <View
       style={[
         styles.container,
-        { borderColor: darkMode ? Colors.dark.text : Colors.light.text },
+        {
+          backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg,
+          borderWidth: 3,
+          borderRadius: 5,
+          borderColor: darkMode ? Colors.dark.text : Colors.light.text,
+        },
       ]}
     >
       {props.children}

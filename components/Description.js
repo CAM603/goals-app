@@ -69,8 +69,6 @@ const styles = StyleSheet.create({
   container: {
     width: "95%",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "black",
     marginVertical: 15,
   },
   title: {

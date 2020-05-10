@@ -9,8 +9,8 @@ const Container = (props) => {
   return (
     <View
       style={[
-        props.style,
         { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
+        props.style,
       ]}
     >
       {props.children}
