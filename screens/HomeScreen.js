@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getGoals, getSettings, initializeSettings } from "../actions/goals";
+import { getGoals, getDarkMode, getSteps } from "../actions/goals";
 import GoalInput from "../components/GoalInput";
 import HeaderButton from "../components/HeaderButton";
 import GoalList from "../components/GoalList";
@@ -13,87 +13,82 @@ import Colors from "../constants/Colors";
 import Loading from "../components/Loading";
 
 const HomeScreen = (props) => {
-  const [isAdding, setIsAdding] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
 
-  let dispatch = useDispatch();
+    let dispatch = useDispatch();
 
-  const goals = useSelector((state) => state.goals.goals);
-  const loading = useSelector((state) => state.goals.loading);
-  const darkMode = useSelector((state) => state.goals.darkMode);
+    const goals = useSelector((state) => state.goals.goals);
+    const loading = useSelector((state) => state.goals.loading);
+    const loadingDarkMode = useSelector((state) => state.goals.loadingDarkMode);
 
-  useEffect(() => {
-    dispatch(getGoals());
-  }, []);
+    useEffect(() => {
+        dispatch(getGoals());
+        dispatch(getDarkMode());
+    }, []);
 
-  useEffect(() => {
-    props.navigation.setParams({ toggleAdding: toggleAdd });
-  }, [toggleAdd]);
+    useEffect(() => {
+        props.navigation.setParams({ toggleAdding: toggleAdd });
+    }, [toggleAdd]);
 
-  useEffect(() => {
-    props.navigation.setParams({ isDarkMode: darkMode });
-  }, [darkMode]);
+    const toggleAdd = () => {
+        setIsAdding(!isAdding);
+    };
 
-  const toggleAdd = () => {
-    setIsAdding(!isAdding);
-  };
+    const renderHome = () => {
+        return (
+            <>
+                <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
+                {goals.length === 0 ? <NoGoals /> : <GoalList {...props} />}
+            </>
+        );
+    };
 
-  const renderHome = () => {
     return (
-      <>
-        <GoalInput isAdding={isAdding} setIsAdding={setIsAdding} />
-        {goals.length === 0 ? <NoGoals /> : <GoalList {...props} />}
-      </>
+        <Container style={styles.screen}>
+            {loading || loadingDarkMode ? <Loading /> : renderHome()}
+        </Container>
     );
-  };
-
-  return (
-    <Container style={styles.screen}>
-      {loading ? <Loading /> : renderHome()}
-    </Container>
-  );
 };
 
 HomeScreen.navigationOptions = (navData) => {
-  const isDarkMode = navData.navigation.getParam("isDarkMode");
-
-  return {
-    headerTitle: "My Goals",
-    headerStyle: {
-      backgroundColor: isDarkMode ? Colors.accent : Colors.light.bg,
-      // shadowColor: "transparent",
-    },
-    headerTintColor: isDarkMode ? Colors.dark.text : Colors.light.text,
-    headerTitleStyle: {
-      fontFamily: "open-sans-bold",
-    },
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="add"
-          iconName="md-add-circle"
-          onPress={navData.navigation.getParam("toggleAdding")}
-        />
-      </HeaderButtons>
-    ),
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="menu"
-          iconName="ios-menu"
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
+    return {
+        headerTitle: "My Goals",
+        headerStyle: {
+            backgroundColor: Colors.accent,
+            shadowColor: "transparent",
+        },
+        headerTintColor: Colors.dark.text,
+        headerTitleStyle: {
+            fontFamily: "open-sans-bold",
+        },
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="add"
+                    iconName="md-add-circle"
+                    onPress={navData.navigation.getParam("toggleAdding")}
+                />
+            </HeaderButtons>
+        ),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="menu"
+                    iconName="ios-menu"
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        ),
+    };
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    alignItems: "center",
-  },
+    screen: {
+        flex: 1,
+        alignItems: "center",
+    },
 });
 
 export default HomeScreen;

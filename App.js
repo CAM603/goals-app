@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { enableScreens } from "react-native-screens";
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -13,41 +13,41 @@ import goalsReducer from "./reducers/goals";
 enableScreens();
 
 init()
-  .then(() => {
-    console.log("Initailized goals database");
-  })
-  .catch((err) => {
-    console.log("Initializing database failed");
-    console.log(err);
-  });
+    .then(() => {
+        console.log("Initailized goals database");
+    })
+    .catch((err) => {
+        console.log("Initializing database failed");
+        console.log(err);
+    });
 
 const rootReducer = combineReducers({
-  goals: goalsReducer,
+    goals: goalsReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const fetchFonts = () => {
-  return Font.loadAsync({
-    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
-  });
+    return Font.loadAsync({
+        "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+        "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    });
 };
 
 export default function App() {
-  const [fontLoaded, setFontLoaded] = useState(false);
+    const [fontLoaded, setFontLoaded] = useState(false);
 
-  if (!fontLoaded) {
+    if (!fontLoaded) {
+        return (
+            <AppLoading
+                startAsync={fetchFonts}
+                onFinish={() => setFontLoaded(true)}
+            />
+        );
+    }
     return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
-      />
+        <Provider store={store}>
+            <GoalsNavigator />
+        </Provider>
     );
-  }
-  return (
-    <Provider store={store}>
-      <GoalsNavigator />
-    </Provider>
-  );
 }

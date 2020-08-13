@@ -8,69 +8,70 @@ import GoalDetailScreen from "../screens/GoalDetailScreen";
 import Colors from "../constants/Colors";
 
 const defaultStackNavOptions = {
-  // headerStyle: {
-  //   backgroundColor: Platform.OS === "android" ? "black" : "white",
-  // },
-  // headerTitleStyle: {
-  //   fontFamily: "open-sans",
-  // },
-  // headerBackTitleStyle: {
-  //   color: "black",
-  // },
-  // headerTintColor: Platform.OS === "android" ? "black" : "white",
-  headerTitle: "A Screen",
+    headerStyle: {
+        backgroundColor: Platform.OS === "android" ? "black" : "white",
+        shadowColor: "transparent",
+    },
+    // headerTitleStyle: {
+    //   fontFamily: "open-sans",
+    // },
+    // headerBackTitleStyle: {
+    //   color: "black",
+    // },
+    // headerTintColor: Platform.OS === "android" ? "black" : "white",
+    headerTitle: "A Screen",
 };
 
 const GoalsNavigator = createStackNavigator(
-  {
-    Home: { screen: HomeScreen },
-    Goal: { screen: GoalDetailScreen },
-  },
-  {
-    // mode: "modal",
+    {
+        Home: { screen: HomeScreen },
+        Goal: { screen: GoalDetailScreen },
+    },
+    {
+        // mode: "modal",
 
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
+        defaultNavigationOptions: defaultStackNavOptions,
+    }
 );
 
 const SettingsNavigator = createStackNavigator(
-  {
-    Settings: { screen: SettingsScreen },
-  },
-  {
-    // Used with shifting on android
-    // tabBarColor: "black",
-    defaultNavigationOptions: defaultStackNavOptions,
-  }
+    {
+        Settings: { screen: SettingsScreen },
+    },
+    {
+        // Used with shifting on android
+        // tabBarColor: "black",
+        defaultNavigationOptions: defaultStackNavOptions,
+    }
 );
 
 const RouteConfigs = {
-  Goals: {
-    screen: GoalsNavigator,
-  },
-  Settings: {
-    screen: SettingsNavigator,
-  },
+    Goals: {
+        screen: GoalsNavigator,
+    },
+    Settings: {
+        screen: SettingsNavigator,
+    },
 };
 
 const DrawerNavigatorConfig = {
-  contentOptions: {
-    // add your styling here
-    activeTintColor: "#e91e63",
-    inactiveTintColor: "white",
-    itemsContainerStyle: {
-      marginVertical: 0,
+    contentOptions: {
+        // add your styling here
+        activeTintColor: "#e91e63",
+        inactiveTintColor: "white",
+        itemsContainerStyle: {
+            marginVertical: 0,
+        },
+        iconContainerStyle: {
+            opacity: 1,
+        },
     },
-    iconContainerStyle: {
-      opacity: 1,
-    },
-  },
-  drawerBackgroundColor: Colors.accent, // sets background color of drawer
+    drawerBackgroundColor: Colors.accent, // sets background color of drawer
 };
 
 const MainNavigator = createDrawerNavigator(
-  RouteConfigs,
-  DrawerNavigatorConfig
+    RouteConfigs,
+    DrawerNavigatorConfig
 );
 
 export default createAppContainer(MainNavigator);
