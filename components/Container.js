@@ -1,21 +1,25 @@
-import React, { useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
 
 const Container = (props) => {
-  const darkMode = useSelector((state) => state.goals.darkMode);
+    const darkMode = useSelector((state) => state.goals.darkMode);
 
-  return (
-    <View
-      style={[
-        { backgroundColor: darkMode ? Colors.dark.bg : Colors.light.bg },
-        props.style,
-      ]}
-    >
-      {props.children}
-    </View>
-  );
+    return (
+        <View
+            style={[
+                {
+                    backgroundColor: darkMode
+                        ? Colors.dark.bg
+                        : Colors.light.bg,
+                },
+                props.style,
+            ]}
+        >
+            {props.children}
+        </View>
+    );
 };
 
 export default Container;

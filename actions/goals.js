@@ -17,94 +17,91 @@ export const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 export const ADD_DESCRIPTION = "ADD_DESCRIPTION";
 
 import {
-  fetchGoals,
-  fetchSteps,
-  insertGoal,
-  deleteGoal,
-  insertStep,
-  toggleStepCompleted,
-  updateGoalDescription,
+    fetchGoals,
+    fetchSteps,
+    insertGoal,
+    deleteGoal,
+    insertStep,
+    toggleStepCompleted,
+    updateGoalDescription,
 } from "../helpers/db";
 
 // Gets all goals
 export const getGoals = () => (dispatch) => {
-  dispatch({ type: GET_GOALS_START });
+    dispatch({ type: GET_GOALS_START });
 
-  fetchGoals()
-    .then((res) => {
-      dispatch({ type: GET_GOALS_SUCCESS, payload: res.rows._array });
-      console.log("GOALS", res.rows._array);
-    })
-    .catch((err) => {
-      dispatch({ type: GET_GOALS_FAILURE, payload: err });
-    });
+    fetchGoals()
+        .then((res) => {
+            dispatch({ type: GET_GOALS_SUCCESS, payload: res.rows._array });
+        })
+        .catch((err) => {
+            dispatch({ type: GET_GOALS_FAILURE, payload: err });
+        });
 };
 
 // Gets all steps for a goal
 export const getSteps = (goal_id) => (dispatch) => {
-  dispatch({ type: GET_STEPS_START });
+    dispatch({ type: GET_STEPS_START });
 
-  fetchSteps(goal_id)
-    .then((res) => {
-      dispatch({ type: GET_STEPS_SUCCESS, payload: res.rows._array });
-      console.log("STEPS", res.rows._array);
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({ type: GET_STEPS_FAILURE, payload: err });
-    });
+    fetchSteps(goal_id)
+        .then((res) => {
+            dispatch({ type: GET_STEPS_SUCCESS, payload: res.rows._array });
+        })
+        .catch((err) => {
+            dispatch({ type: GET_STEPS_FAILURE, payload: err });
+        });
 };
 
 // Adds a goal and then gets all goals
 export const addGoal = (goal) => async (dispatch) => {
-  dispatch({ type: ADD_GOAL });
-  await insertGoal(goal);
-  dispatch(getGoals());
+    dispatch({ type: ADD_GOAL });
+    await insertGoal(goal);
+    dispatch(getGoals());
 };
 
 // Adds a step and then gets all steps
 export const addStep = (step, goal_id) => async (dispatch) => {
-  dispatch({ type: ADD_STEP });
-  await insertStep(step, goal_id);
-  dispatch(getSteps(goal_id));
+    dispatch({ type: ADD_STEP });
+    await insertStep(step, goal_id);
+    dispatch(getSteps(goal_id));
 };
 
 // Removes a goal and then gets all goals
 export const removeGoal = (goalID) => async (dispatch) => {
-  dispatch({ type: REMOVE_GOAL });
-  await deleteGoal(goalID);
-  dispatch(getGoals());
+    dispatch({ type: REMOVE_GOAL });
+    await deleteGoal(goalID);
+    dispatch(getGoals());
 };
 
 // Checks for darkmode setting in async storage, sets to false if not there
 export const getDarkMode = () => async (dispatch) => {
-  dispatch({ type: GET_DARK_MODE_START });
+    dispatch({ type: GET_DARK_MODE_START });
 
-  let res = await AsyncStorage.getItem("DARKMODE");
-  res = JSON.parse(res);
+    let res = await AsyncStorage.getItem("DARKMODE");
+    res = JSON.parse(res);
 
-  if (res !== null) {
-    dispatch({ type: GET_DARK_MODE_SUCCESS, payload: res });
-  } else {
-    await AsyncStorage.setItem("DARKMODE", JSON.stringify(false));
-    dispatch({ type: GET_DARK_MODE_FAILURE, payload: false });
-  }
+    if (res !== null) {
+        dispatch({ type: GET_DARK_MODE_SUCCESS, payload: res });
+    } else {
+        await AsyncStorage.setItem("DARKMODE", JSON.stringify(false));
+        dispatch({ type: GET_DARK_MODE_FAILURE, payload: false });
+    }
 };
 
 // Toggles darkmode boolean
 export const toggleDarkMode = () => async (dispatch) => {
-  dispatch({ type: TOGGLE_DARK_MODE });
+    dispatch({ type: TOGGLE_DARK_MODE });
 };
 
 // Toggles completed field for step
 export const toggleCompleted = (step_id, goal_id) => async (dispatch) => {
-  dispatch({ type: TOGGLE_COMPLETED });
-  await toggleStepCompleted(step_id);
+    dispatch({ type: TOGGLE_COMPLETED });
+    await toggleStepCompleted(step_id);
 };
 
 // Adds description to goal
 export const addDescription = (description, goal_id) => async (dispatch) => {
-  dispatch({ type: ADD_DESCRIPTION });
-  await updateGoalDescription(description, goal_id);
-  dispatch(getGoals());
+    dispatch({ type: ADD_DESCRIPTION });
+    await updateGoalDescription(description, goal_id);
+    dispatch(getGoals());
 };
