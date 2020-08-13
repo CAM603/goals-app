@@ -67,7 +67,7 @@ SettingsScreen.navigationOptions = (navData) => {
         headerTitle: "Settings",
         headerStyle: {
             backgroundColor: Colors.accent,
-            // shadowColor: "transparent",
+            shadowColor: "transparent",
         },
         headerTintColor: Colors.dark.text,
         headerTitleStyle: {

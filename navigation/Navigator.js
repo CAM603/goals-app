@@ -8,9 +8,10 @@ import GoalDetailScreen from "../screens/GoalDetailScreen";
 import Colors from "../constants/Colors";
 
 const defaultStackNavOptions = {
-    // headerStyle: {
-    //   backgroundColor: Platform.OS === "android" ? "black" : "white",
-    // },
+    headerStyle: {
+        backgroundColor: Platform.OS === "android" ? "black" : "white",
+        shadowColor: "transparent",
+    },
     // headerTitleStyle: {
     //   fontFamily: "open-sans",
     // },

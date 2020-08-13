@@ -55,7 +55,7 @@ HomeScreen.navigationOptions = (navData) => {
         headerTitle: "My Goals",
         headerStyle: {
             backgroundColor: Colors.accent,
-            // shadowColor: "transparent",
+            shadowColor: "transparent",
         },
         headerTintColor: Colors.dark.text,
         headerTitleStyle: {

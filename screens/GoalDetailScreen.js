@@ -53,7 +53,7 @@ GoalDetailScreen.navigationOptions = (navData) => {
         headerTitle: goal.goal,
         headerStyle: {
             backgroundColor: Colors.accent,
-            // shadowColor: "transparent",
+            shadowColor: "transparent",
         },
         headerTintColor: Colors.dark.text,
         headerTitleStyle: {
