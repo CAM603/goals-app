@@ -6,6 +6,10 @@ React Native app to help you track and complete your goals, one step at a time!
 
 There's no better way to learn a new framework than by creating a to do list. I wanted to learn React Native so I created this application and it's something that I can continually add on to and improve as I learn more about React native.
 
+## Screenshots
+
+![Goals App](./images/todo.png)
+
 ## How it works
 
 1. Create a goal
@@ -30,4 +34,4 @@ There's no better way to learn a new framework than by creating a to do list. I 
 
 ## Credits
 
-Inspired by concepts learned in Maximilian Schwarzmüller's React Native Practical Guide 2020 [link to course](https://www.udemy.com/course/react-native-the-practical-guide/)
+Inspired by concepts learned in Maximilian Schwarzmüller's React Native Practical Guide 2020 link to course [here](https://www.udemy.com/course/react-native-the-practical-guide/)
